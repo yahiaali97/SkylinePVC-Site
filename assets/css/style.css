@@ -750,3 +750,13 @@ a.topbar-loc:hover { color: #6cc1f0; }
 }
 .cs-map:hover .cs-cta-map, .cs-map:focus-visible .cs-cta-map, .cs-wa:hover .cs-cta, .cs-wa:focus-visible .cs-cta { opacity: 1; transform: none; margin: 0 !important; }
 @media (hover: none) { .cs-map .cs-cta-map, .cs-wa .cs-cta { opacity: 1; transform: none; } }
+
+/* ===== No horizontal overflow on any device ===== */
+html, body { max-width: 100%; }
+main, .site-footer, .topbar { overflow-x: clip; }
+@supports not (overflow: clip) { main, .site-footer, .topbar { overflow-x: hidden; } }
+img, video, iframe, canvas { max-width: 100%; }
+@media (max-width: 900px) {
+  .reveal-left, .reveal-right { transform: translateY(30px); }
+  .reveal-left.in, .reveal-right.in { transform: none; }
+}

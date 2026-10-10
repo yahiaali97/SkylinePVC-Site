@@ -294,17 +294,35 @@
 
   /* ---------- Counters (count up once when visible) ---------- */
   var nums = document.querySelectorAll(".stat-num[data-count]");
+  function fmtCount(el, v) {
+    if (el.getAttribute("data-format") === "k") {
+      if (v < 1000) return Math.round(v) + "";
+      var k = v / 1000, s = k >= 100 ? Math.floor(k) : Math.floor(k * 10) / 10;
+      return (s % 1 === 0 ? s.toFixed(0) : s.toFixed(1)) + "K+";
+    }
+    return Math.round(v) + (el.getAttribute("data-suffix") || "");
+  }
   function runCount(el) {
-    var end = +el.getAttribute("data-count"), suf = el.getAttribute("data-suffix") || "";
-    if (reduceMotion) { el.textContent = end + suf; return; }
+    var end = +el.getAttribute("data-count");
+    el.__counted = true;
+    if (reduceMotion) { el.textContent = fmtCount(el, end); return; }
     var t0 = null, dur = 1600;
     function step(ts) {
       if (!t0) t0 = ts;
       var k = Math.min((ts - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = Math.round(end * e) + suf;
-      if (k < 1) requestAnimationFrame(step);
+      el.textContent = fmtCount(el, end * e);
+      if (k < 1) requestAnimationFrame(step); else el.textContent = fmtCount(el, end);
     }
     requestAnimationFrame(step);
+  }
+  /* live Facebook followers: stats.json is refreshed automatically by a GitHub Action */
+  var fbEl = document.getElementById("fb-followers");
+  if (fbEl && window.fetch) {
+    fetch("assets/data/stats.json?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !(d.facebook_followers > 0)) return;
+      fbEl.setAttribute("data-count", d.facebook_followers);
+      if (fbEl.__counted) fbEl.textContent = fmtCount(fbEl, d.facebook_followers);
+    }).catch(function () {});
   }
   if (nums.length) {
     if ("IntersectionObserver" in window) {
@@ -349,4 +367,40 @@
   }
 
   setupReveal(); setupImgLoad();
+
+  /* ---------- Anchor links (e.g. "عن الشركة" -> #about): land exactly under the header ---------- */
+  function goToHash(smooth) {
+    if (!location.hash) return;
+    var el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (!el) return;
+    var hdr = document.querySelector(".site-header");
+    var y = el.getBoundingClientRect().top + window.scrollY - (hdr ? hdr.offsetHeight : 0) - 28;
+    window.scrollTo({ top: Math.max(0, y), behavior: smooth ? "smooth" : "auto" });
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest('a[href*="#"]');
+    if (!a) return;
+    var url = new URL(a.href, location.href);
+    if (url.pathname !== location.pathname || !url.hash) return;
+    e.preventDefault();
+    history.pushState(null, "", url.hash);
+    if (nav) nav.classList.remove("open");
+    goToHash(true);
+  });
+  if (location.hash) {
+    window.addEventListener("load", function () { goToHash(false); setTimeout(function () { goToHash(false); }, 300); });
+  }
+
+  /* ---------- Hero video: muted by default; sound only via the button ---------- */
+  var hv = document.getElementById("hero-video"), vs = document.getElementById("vid-sound");
+  if (hv && vs) {
+    var setUI = function () { vs.setAttribute("aria-pressed", hv.muted ? "false" : "true"); vs.classList.toggle("on", !hv.muted);
+      vs.setAttribute("aria-label", hv.muted ? "تشغيل الصوت" : "كتم الصوت"); vs.querySelector(".vs-label").textContent = hv.muted ? "شغّل الصوت" : ""; };
+    hv.muted = true; var pr = hv.play(); if (pr && pr.catch) pr.catch(function () {});
+    setUI();
+    vs.addEventListener("click", function (e) {
+      e.stopPropagation(); hv.muted = !hv.muted; if (!hv.muted) { hv.volume = 1; hv.play().catch(function () {}); } setUI();
+    });
+    hv.addEventListener("volumechange", setUI);
+  }
 })();

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+
+Sitemap: https://yahiaali97.github.io/SkylinePVC-Site/sitemap.xml

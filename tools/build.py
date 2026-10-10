@@ -45,14 +45,35 @@ BRAND = '<a class="brand" href="index.html" aria-label="Skyline — الصفحة
 NAV = [("index.html", "الرئيسية"), ("index.html#about", "عن الشركة"), ("projects.html", "مشاريعنا"), ("gallery.html", "معرض الصور"), ("index.html#faq", "الأسئلة الشائعة"), ("contact.html", "تواصل معنا")]
 
 
+SITE = "https://yahiaali97.github.io/SkylinePVC-Site/"
+KEYWORDS = "شبابيك upvc, أبواب upvc, شبابيك يو بي في سي, شبابيك upvc مدينة نصر, شبابيك upvc القاهرة, تقفيل بلكونات, شيش حصيرة, شبابيك جرار, شبابيك بانوراما, سلك بليسيه, قطاع كومبين, قطاع كاترا, Skyline uPVC, سكاي لاين"
+
+
 def head(title, desc):
     return f'''<!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar-EG" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
+<meta name="keywords" content="{KEYWORDS}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="__CANON__">
+<meta name="theme-color" content="#08131f">
+<meta name="geo.region" content="EG-C"><meta name="geo.placename" content="مدينة نصر، القاهرة"><meta name="geo.position" content="30.0587503;31.3565234"><meta name="ICBM" content="30.0587503, 31.3565234">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_EG">
+<meta property="og:site_name" content="Skyline - For UPVC &amp; Shutter">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="__CANON__">
+<meta property="og:image" content="{SITE}assets/og-image.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{SITE}assets/og-image.jpg">
 <link rel="icon" href="assets/favicon-window.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-win32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/favicon-win48.png" sizes="48x48" type="image/png">
@@ -61,10 +82,44 @@ def head(title, desc):
 <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css?v={ASSET_V}">
 <script>try{{var t=localStorage.getItem("skyline-theme");if(t)document.documentElement.setAttribute("data-theme",t)}}catch(e){{}}</script>
+__LD__
 </head>
 <body>
 <a class="skip" href="#main">تخطَّ إلى المحتوى</a>
 '''
+
+
+def jsonld():
+    import json, re
+    biz = {
+        "@context": "https://schema.org",
+        "@type": "HomeAndConstructionBusiness",
+        "@id": SITE + "#business",
+        "name": "Skyline - For UPVC & Shutter",
+        "alternateName": ["سكاي لاين لأعمال اليو بي في سي", "Skyline uPVC", "سكاي لاين باب وشباك"],
+        "description": "توريد وتركيب أبواب وشبابيك uPVC وشيش حصيرة وتقفيل بلكونات في جميع محافظات مصر — المعرض الرئيسي في مدينة نصر، القاهرة.",
+        "slogan": "الاختيار الراقي لمن يُقَدِّر التفاصيل",
+        "url": SITE,
+        "logo": SITE + "assets/logo.png",
+        "image": [SITE + "assets/og-image.jpg", SITE + "assets/hero-doors.jpg"],
+        "telephone": "+201111934900",
+        "foundingDate": "2019",
+        "address": {"@type": "PostalAddress", "streetAddress": "شارع حسن مأمون، الحي الثامن", "addressLocality": "مدينة نصر",
+                    "addressRegion": "القاهرة", "addressCountry": "EG"},
+        "geo": {"@type": "GeoCoordinates", "latitude": 30.0587503, "longitude": 31.3565234},
+        "hasMap": MAPS,
+        "areaServed": {"@type": "Country", "name": "مصر"},
+        "sameAs": [FB, IG],
+        "contactPoint": [
+            {"@type": "ContactPoint", "telephone": "+201111934900", "contactType": "sales", "availableLanguage": ["ar"]},
+            {"@type": "ContactPoint", "telephone": "+201080477077", "contactType": "customer service", "availableLanguage": ["ar"]}],
+        "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": n}} for n in
+                       ["شبابيك وأبواب uPVC", "شبابيك جرار", "شبابيك بانوراما منطبق وباندا", "تقفيل بلكونات", "شيش حصيرة", "سلك متحرك وبليسيه"]],
+    }
+    faq = {"@context": "https://schema.org", "@type": "FAQPage",
+           "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", a).strip()}} for q, a in FAQ]}
+    site = {"@context": "https://schema.org", "@type": "WebSite", "name": "Skyline uPVC", "url": SITE, "inLanguage": "ar-EG"}
+    return "\n".join('<script type="application/ld+json">' + json.dumps(x, ensure_ascii=False) + "</script>" for x in (biz, faq, site))
 
 
 def header(active):
@@ -201,7 +256,7 @@ def page_index():
     steps = "".join(f'<li class="jcard"><span class="jnum">0{i+1}</span><h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(STEPS))
     trust = "".join(f'<figure class="trust-card"><blockquote>{d}</blockquote><figcaption>{n}</figcaption></figure>' for n, d in TRUST)
     faq_short = "".join(f'<details><summary>{q}</summary><div class="answer">{a}</div></details>' for q, a in FAQ)
-    return head("Skyline | أبواب وشبابيك uPVC", "Skyline - For UPVC & Shutter: توريد وتركيب أبواب وشبابيك uPVC وشيش حصيرة — المعرض الرئيسي في مدينة نصر.") + header("index.html") + f'''
+    return head("شبابيك وأبواب uPVC وشيش حصيرة في القاهرة | Skyline سكاي لاين", "Skyline سكاي لاين: توريد وتركيب شبابيك وأبواب uPVC، شبابيك جرار وبانوراما، تقفيل بلكونات وشيش حصيرة في جميع محافظات مصر. ضمان 10 سنين على القطاع — المعرض في مدينة نصر.") + header("index.html") + f'''
 <section class="hero">
   <canvas id="hero3d" aria-hidden="true"></canvas>
   <div class="container hero-grid">
@@ -216,17 +271,18 @@ def page_index():
       <p class="slogan reveal reveal-d3"><span>الاختيار الراقي</span> لمن يُقَدِّر التفاصيل</p>
     </div>
     <div class="hero-media reveal reveal-left reveal-d2">
-      <figure><img src="assets/hero-doors.jpg" alt="صورة توضيحية لأبواب uPVC بيضاء" width="678" height="452"></figure>
-      <div class="hero-badge"><span class="hb-icon">{I["shield"]}</span><div><strong>+100</strong><span>مشروع نفّذناه</span></div></div>
+      <figure class="hero-video"><video id="hero-video" poster="assets/video/poster.jpg" autoplay muted loop playsinline preload="auto" width="1280" height="720" aria-label="فيديو تعريفي عن مواصفات خامات Skyline"><source src="assets/video/skyline-intro.mp4" type="video/mp4"><source src="assets/video/skyline-intro.webm" type="video/webm"></video>
+        <button type="button" class="vid-sound" id="vid-sound" aria-label="تشغيل الصوت" aria-pressed="false"><svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m23 9-6 6M17 9l6 6"/></svg><svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg><span class="vs-label">شغّل الصوت</span></button></figure>
+      <div class="hero-badge"><span class="hb-icon">{I["shield"]}</span><div><strong dir="ltr">600+</strong><span>مشروع نفّذناه</span></div></div>
     </div>
   </div>
 </section>
 
 <section class="stats-band">
   <div class="container stats">
-    <div class="stat reveal"><span class="stat-num" data-count="100" data-suffix="+">0</span><span class="stat-label">مشروع نفّذناه</span></div>
+    <div class="stat reveal"><span class="stat-num" data-count="600" data-suffix="+">0</span><span class="stat-label">مشروع نفّذناه</span></div>
     <div class="stat reveal reveal-d1"><span class="stat-num" data-count="27">0</span><span class="stat-label">بنشتغل في جميع محافظات مصر</span></div>
-    <div class="stat reveal reveal-d2"><span class="stat-num" data-count="18" data-suffix="K+">0</span><span class="stat-label">متابع على فيسبوك</span></div>
+    <div class="stat reveal reveal-d2"><span class="stat-num" id="fb-followers" data-count="18000" data-format="k">0</span><span class="stat-label">متابع على فيسبوك</span></div>
   </div>
 </section>
 
@@ -242,7 +298,7 @@ def page_index():
         <li><strong>زجاج:</strong> سنجل ودبل وعاكس ومصنفر، وزجاج سان جوبان.</li>
         <li><strong>تأسيس:</strong> حديد مجلفن 1.25 مم، عجل نحاس، مفصلات صلب.</li>
       </ul>
-      <div class="hero-actions" style="margin-top:22px"><a class="btn btn-primary" href="quote.html">{I["doc"]}اطلب عرض سعر</a><a class="btn btn-ghost" href="gallery.html">معرض الصور</a></div>
+      <div class="hero-actions" style="margin-top:22px"><a class="btn btn-ghost" href="gallery.html">معرض الصور</a></div>
     </div>
     <div class="about-media reveal reveal-left">
       <figure class="am-main"><img src="assets/gallery/1024769387253886-1.jpg" alt="فني Skyline في موقع فيلا بالتجمع الأول" loading="lazy" width="640" height="800"></figure>
@@ -305,13 +361,6 @@ def page_index():
 </section>
 
 <section class="section section-alt">
-  <div class="container">
-    <div class="section-head reveal"><p class="eyebrow">ثقة متجددة</p><h2>عملاء رجعولنا تاني</h2><p>من منشورات الشركة على فيسبوك — عملاء جربوا الشغل واختارونا تاني.</p></div>
-    <div class="trust-grid">{trust}</div>
-  </div>
-</section>
-
-<section class="section">
   <div class="container faq-split" id="faq">
     <div class="reveal">
       <p class="eyebrow">أسئلة شائعة</p>
@@ -323,7 +372,7 @@ def page_index():
   </div>
 </section>
 
-<section class="section section-alt section-tight">
+<section class="section section-tight">
   <div class="container contact-strip">
     <a class="cs-item cs-map reveal" href="{MAPS}" target="_blank" rel="noopener"><span class="card-icon">{I["pin"]}</span><div><strong>المعرض الرئيسي</strong><span>{ADDRESS}</span><em class="cs-cta cs-cta-map">افتح على خرائط جوجل ←</em></div></a>
     <div class="cs-item reveal reveal-d1"><span class="card-icon">{I["phone"]}</span><div><strong>للحجز والاستفسار</strong><span dir="ltr"><a href="tel:+201111934900">01111934900</a> · <a href="tel:+201080477077">01080477077</a></span></div></div>
@@ -373,7 +422,7 @@ def page_about():
 
 
 def page_projects():
-    return head("مشاريعنا | Skyline uPVC", "فيديوهات مشاريع Skyline الحقيقية من صفحة فيسبوك الرسمية — مع مكان كل مشروع.") + header("projects.html") + f'''
+    return head("مشاريع شبابيك وأبواب uPVC بالفيديو | Skyline سكاي لاين", "شوف فيديوهات مشاريع Skyline الحقيقية لشبابيك وأبواب uPVC وتقفيل البلكونات والشيش الحصيرة في مدينة نصر والتجمع ومدينتي وأكتوبر والشروق.") + header("projects.html") + f'''
 ''' + phero("مشاريعنا", "مشاريعنا · فيديو", "فيديوهات من مواقع التنفيذ.", "كل الفيديوهات المنشورة على صفحة Skyline في فيسبوك، ومكتوب تحت كل فيديو المكان. اضغط على الفيديو عشان تشغّله.") + f'''
 <section class="section" style="padding-top:16px">
   <div class="container">
@@ -416,7 +465,7 @@ def page_faq():
 def page_contact():
     from urllib.parse import quote
     q = quote(MAPQ)
-    return head("تواصل معنا | Skyline uPVC", "أرقام وحسابات Skyline الرسمية وعنوان المعرض الرئيسي في مدينة نصر.") + header("contact.html") + f'''
+    return head("تواصل مع Skyline لشبابيك uPVC — مدينة نصر، القاهرة", "اتصل بـ Skyline لشبابيك وأبواب uPVC: 01111934900 – 01080477077، واتساب، والمعرض في شارع حسن مأمون، مدينة نصر، القاهرة.") + header("contact.html") + f'''
 ''' + phero("تواصل", "تواصل · معاينة واستفسار", "اتواصل مع Skyline.", "للحجز والاستفسار وطلب المعاينات — بالتليفون أو واتساب أو زورنا في المعرض.") + f'''
 <section class="section" style="padding-top:24px">
   <div class="container contact-grid">
@@ -475,7 +524,7 @@ QUOTE_FORM = f'''    <form class="card request-form reveal" id="wa-form" novalid
 
 
 def page_quote():
-    return head("طلب عرض سعر | Skyline uPVC", "اطلب عرض سعر لأبواب وشبابيك uPVC من Skyline وارفع صورة المقاسات.") + header("quote.html") + phero("طلب عرض سعر", "عرض سعر · معاينة", "اطلب عرض سعر.", "املا البيانات وارفع صورة المقاسات، والطلب هيوصل لفريق Skyline على واتساب.") + f'''
+    return head("اطلب عرض سعر شبابيك وأبواب uPVC | Skyline سكاي لاين", "اطلب عرض سعر لشبابيك وأبواب uPVC وتقفيل البلكونات والشيش الحصيرة من Skyline — ابعت المقاسات وصورة المكان على واتساب.") + header("quote.html") + phero("طلب عرض سعر", "عرض سعر · معاينة", "اطلب عرض سعر.", "املا البيانات وارفع صورة المقاسات، والطلب هيوصل لفريق Skyline على واتساب.") + f'''
 <section class="section" style="padding-top:24px">
   <div class="container quote-grid">
 {QUOTE_FORM}
@@ -493,7 +542,7 @@ GALLERY = [("1160000315931806", "قبل وبعد — تركيب شباك uPVC ف
 
 def page_gallery():
     fb = "".join(f'<figure class="gitem reveal {cls}"><button type="button" class="gbtn" data-full="assets/gallery/{i}.jpg" data-cap="{t}"><img src="assets/gallery/{i}.jpg" alt="{t}" loading="lazy"></button><figcaption><strong>{t}</strong><span>{d}</span><a href="https://www.facebook.com/photo.php?fbid={i}" target="_blank" rel="noopener">{I["ext"]}المنشور الأصلي</a></figcaption></figure>' for i, t, d, cls in GALLERY)
-    return head("معرض الصور | Skyline uPVC", "صور أبواب وشبابيك uPVC من صفحة Skyline الرسمية على فيسبوك.") + header("gallery.html") + phero("معرض الصور", "معرض الصور", "شبابيك وأبواب من شغلنا.", "لقطات من مواقع التنفيذ الحقيقية — مأخوذة من فيديوهات وصور صفحة Skyline على فيسبوك.") + f'''
+    return head("صور شبابيك uPVC وتقفيل بلكونات من مواقعنا | Skyline", "معرض صور حقيقية لشبابيك وأبواب uPVC من مواقع تنفيذ Skyline: شبابيك جرار، بانوراما، تقفيل بلكونات وشيش حصيرة.") + header("gallery.html") + phero("معرض الصور", "معرض الصور", "شبابيك وأبواب من شغلنا.", "لقطات من مواقع التنفيذ الحقيقية — مأخوذة من فيديوهات وصور صفحة Skyline على فيسبوك.") + f'''
 <section class="section" style="padding-top:24px">
   <div class="container">
     <div class="section-head reveal"><p class="eyebrow">من مواقع التنفيذ</p><h2>لقطات من المشاريع</h2><p>اضغط على أي صورة لتكبيرها. الفيديو الكامل لكل مشروع في <a href="projects.html">صفحة المشاريع</a>.</p></div>
@@ -508,18 +557,32 @@ def page_gallery():
 
 
 REDIRECT = '''<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>Skyline</title>
-<meta http-equiv="refresh" content="0; url=index.html#about"><link rel="canonical" href="index.html#about">
+<meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0; url=index.html#about"><link rel="canonical" href="index.html#about">
 <script>location.replace("index.html#about")</script></head><body><a href="index.html#about">عن الشركة</a></body></html>
 '''
 
 
+def write_seo_files():
+    import datetime
+    today = datetime.date.today().isoformat()
+    urls = [("", "1.0", "weekly"), ("projects.html", "0.8", "weekly"), ("gallery.html", "0.7", "monthly"),
+            ("quote.html", "0.8", "monthly"), ("contact.html", "0.7", "monthly")]
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
+        f"  <url><loc>{SITE}{u}</loc><lastmod>{today}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>\n" for u, pr, f in urls) + "</urlset>\n"
+    (ROOT / "sitemap.xml").write_text(xml, encoding="utf-8")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /tools/\n\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")
+
+
 def main():
+    write_seo_files()
     import re
     data = (ROOT / "assets/js/projects-data.js").read_text(encoding="utf-8")
     n = len(re.findall(r'\bid: "', data))
     pages = {"quote.html": page_quote(), "gallery.html": page_gallery(), "index.html": page_index().replace("{n}", str(n)), "about.html": REDIRECT, "projects.html": page_projects(),
              "faq.html": REDIRECT.replace("#about", "#faq").replace("عن الشركة", "الأسئلة الشائعة"), "contact.html": page_contact()}
     for name, html in pages.items():
+        canon = SITE if name == "index.html" else SITE + name
+        html = html.replace("__CANON__", canon).replace("__LD__", jsonld() if name == "index.html" else "")
         (ROOT / name).write_text(html, encoding="utf-8")
         print("wrote", name)
 

@@ -1024,3 +1024,4 @@ html.rv-lock { overflow: hidden; }
 /* email card on the contact page: full row, address on one line */
 .contact-item[href^="mailto:"] { grid-column: 1 / -1; }
 .contact-item[href^="mailto:"] span[dir="ltr"] { white-space: nowrap; }
+.form-grid input[aria-invalid="true"] { border-color: #ff6b6b; box-shadow: 0 0 0 4px rgba(255,107,107,.16); }

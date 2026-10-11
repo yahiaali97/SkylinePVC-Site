@@ -235,28 +235,21 @@
       var name = f.name.value.trim(), phone = f.phone.value.trim();
       okEl.hidden = true;
       if (!name || !phone) { showErr("من فضلك اكتب الاسم ورقم الموبايل."); (name ? f.phone : f.name).focus(); return; }
+      if (!/^[+\d][\d\s-]{6,}$/.test(phone)) { showErr("رقم الموبايل مش مظبوط."); f.phone.focus(); return; }
       showErr("");
-      var lines = ["السلام عليكم، عايز عرض سعر.", "الاسم: " + name, "الموبايل: " + phone];
+      var lines = ["طلب عرض سعر جديد من الموقع", "الاسم: " + name, "الموبايل: " + phone];
       if (f.area.value.trim()) lines.push("المنطقة: " + f.area.value.trim());
       if (f.profile.value.trim()) lines.push("نوع القطاع: " + f.profile.value.trim());
       if (f.color.value.trim()) lines.push("اللون: " + f.color.value.trim());
       if (f.details.value.trim()) lines.push("تفاصيل: " + f.details.value.trim());
-      if (photo) lines.push("(صورة المقاسات مرفقة)");
       var text = lines.join("\n");
-      var waUrl = "https://wa.me/201111934900?text=" + encodeURIComponent(text);
 
-      if (photo && navigator.canShare && navigator.canShare({ files: [photo] })) {
-        navigator.share({ files: [photo], text: text, title: "طلب عرض سعر — Skyline" }).then(function () {
-          okEl.innerHTML = "تمام! اختار واتساب وابعت لرقم Skyline ‎+20 11 11934900‎. لو ماظهرش، <a href=\"" + waUrl + "\" target=\"_blank\" rel=\"noopener\">افتح المحادثة من هنا</a> وارفق الصورة.";
-          okEl.hidden = false;
-        }).catch(function () { window.open(waUrl, "_blank", "noopener"); });
-        return;
-      }
-      window.open(waUrl, "_blank", "noopener");
-      okEl.innerHTML = photo
-        ? "اتفتحت محادثة واتساب بالرسالة. <strong>ارفق صورة المقاسات</strong> في المحادثة (زرار 📎 أو اسحب الصورة جوه الشات) وبعدين ابعت."
-        : "اتفتحت محادثة واتساب بالرسالة — اضغط إرسال.";
-      okEl.hidden = false;
+      /* open the Skyline WhatsApp chat directly with the request typed in */
+      var waUrl = "https://wa.me/201111934900?text=" + encodeURIComponent(text + (photo ? "\n(هبعت صورة المقاسات حالاً)" : ""));
+      waForm.reset(); setPhoto(null);
+      var mobile = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      if (mobile) location.href = waUrl;           // phone: jumps straight into the WhatsApp app
+      else window.open(waUrl, "_blank", "noopener"); // desktop: WhatsApp Web / app in a new tab, site stays open
     });
   }
 

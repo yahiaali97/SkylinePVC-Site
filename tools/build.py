@@ -500,16 +500,16 @@ QUOTE_FORM = f'''    <form class="card request-form reveal" id="wa-form" novalid
       <h2>ابعت بياناتك والمقاسات</h2>
       <div class="form-grid">
         <label>الاسم بالكامل *<input name="name" required autocomplete="name"></label>
-        <label>رقم الموبايل *<input name="phone" required inputmode="tel" autocomplete="tel" dir="ltr"></label>
+        <label>رقم الموبايل *<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" dir="ltr" maxlength="16" placeholder="01xxxxxxxxx"></label>
         <label>المنطقة<input name="area" placeholder="مثلاً: مدينة نصر"></label>
         <label>نوع القطاع<input name="profile" placeholder="مثلاً: كاترا، كومبين، أو سيبها لترشيحنا"></label>
         <label>اللون<input name="color" placeholder="أبيض، بيج، أرو، خشبي، رمادي، أسود…"></label>
         <div class="full upload-field">
           <span class="upload-label">صورة المقاسات</span>
           <label class="dropzone" id="dropzone">
-            <input type="file" name="photo" id="photo" accept="image/*" capture="environment">
+            <input type="file" name="photo" id="photo" accept="image/*">
             <span class="dz-icon">{I["upload"]}</span>
-            <span class="dz-text"><strong>ارفع صورة المقاسات</strong><span>اسحب الصورة هنا أو اضغط للاختيار — JPG / PNG لحد 10 ميجا</span></span>
+            <span class="dz-text"><strong>ارفع صورة المقاسات</strong><span>اختار من الجاليري أو صوّر دلوقتي — أو اسحب الصورة هنا (لحد 10 ميجا)</span></span>
           </label>
           <div class="upload-preview" id="upload-preview" hidden>
             <img alt="معاينة صورة المقاسات" id="preview-img">
@@ -522,7 +522,7 @@ QUOTE_FORM = f'''    <form class="card request-form reveal" id="wa-form" novalid
       <p class="form-error" id="wa-error" role="alert" hidden></p>
       <div class="form-success" id="wa-success" role="status" hidden></div>
       <div class="hero-actions"><button class="btn btn-primary" type="submit">{I["wa"]}ابعت الطلب على واتساب</button><a class="btn btn-ghost" href="tel:+201111934900">{I["phone"]}اتصل بدل كده</a></div>
-      <p class="note">الطلب بيروح على رقم واتساب الشركة المنشور على فيسبوك <span dir="ltr">+20 11 11934900</span>. على الموبايل الصورة بتتبعت مع الرسالة مباشرة؛ على الكمبيوتر هتتفتح المحادثة وتلزق الصورة فيها. مفيش بيانات بتتخزن على الموقع.</p>
+      <p class="note">أول ما تضغط إرسال هتتفتح محادثة واتساب Skyline <span dir="ltr">+20 11 11934900</span> والطلب مكتوب فيها جاهز — ارفق صورة المقاسات في المحادثة واضغط إرسال. مفيش بيانات بتتخزن على الموقع.</p>
     </form>
 '''
 

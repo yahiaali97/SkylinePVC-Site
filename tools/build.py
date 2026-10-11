@@ -177,7 +177,6 @@ def footer(extra_scripts=""):
     </div>
     <div class="footer-bottom">
       <span>© <span id="y">2026</span> Skyline - For UPVC &amp; Shutter</span>
-      <span>المحتوى والصور مأخوذة من الحسابات الرسمية للشركة.</span>
     </div>
   </div>
 </footer>
@@ -256,7 +255,7 @@ def page_index():
     steps = "".join(f'<li class="jcard"><span class="jnum">0{i+1}</span><h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(STEPS))
     trust = "".join(f'<figure class="trust-card"><blockquote>{d}</blockquote><figcaption>{n}</figcaption></figure>' for n, d in TRUST)
     faq_short = "".join(f'<details><summary>{q}</summary><div class="answer">{a}</div></details>' for q, a in FAQ)
-    return head("شبابيك وأبواب uPVC وشيش حصيرة في القاهرة | Skyline سكاي لاين", "Skyline سكاي لاين: توريد وتركيب شبابيك وأبواب uPVC، شبابيك جرار وبانوراما، تقفيل بلكونات وشيش حصيرة في جميع محافظات مصر. ضمان 10 سنين على القطاع — المعرض في مدينة نصر.") + header("index.html") + f'''
+    return head("شبابيك وأبواب uPVC وشيش حصيرة | Skyline سكاي لاين", "Skyline سكاي لاين: توريد وتركيب شبابيك وأبواب uPVC، شبابيك جرار وبانوراما، تقفيل بلكونات وشيش حصيرة في جميع محافظات مصر. ضمان 10 سنين على القطاع — المعرض في مدينة نصر.") + header("index.html") + f'''
 <section class="hero">
   <canvas id="hero3d" aria-hidden="true"></canvas>
   <div class="container hero-grid">

@@ -52,7 +52,7 @@
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
       });
-    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0.12, rootMargin: "0px 0px -12% 0px" });
     els.forEach(function (el) { io.observe(el); });
   }
 
@@ -391,16 +391,7 @@
     window.addEventListener("load", function () { goToHash(false); setTimeout(function () { goToHash(false); }, 300); });
   }
 
-  /* ---------- Hero video: muted by default; sound only via the button ---------- */
-  var hv = document.getElementById("hero-video"), vs = document.getElementById("vid-sound");
-  if (hv && vs) {
-    var setUI = function () { vs.setAttribute("aria-pressed", hv.muted ? "false" : "true"); vs.classList.toggle("on", !hv.muted);
-      vs.setAttribute("aria-label", hv.muted ? "تشغيل الصوت" : "كتم الصوت"); vs.querySelector(".vs-label").textContent = hv.muted ? "شغّل الصوت" : ""; };
-    hv.muted = true; var pr = hv.play(); if (pr && pr.catch) pr.catch(function () {});
-    setUI();
-    vs.addEventListener("click", function (e) {
-      e.stopPropagation(); hv.muted = !hv.muted; if (!hv.muted) { hv.volume = 1; hv.play().catch(function () {}); } setUI();
-    });
-    hv.addEventListener("volumechange", setUI);
-  }
+  /* ---------- Hero video: silent, looping like a GIF ---------- */
+  var hv = document.getElementById("hero-video");
+  if (hv) { hv.muted = true; hv.defaultMuted = true; var pr = hv.play(); if (pr && pr.catch) pr.catch(function () {}); }
 })();

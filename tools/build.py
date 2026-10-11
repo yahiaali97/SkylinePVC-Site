@@ -40,7 +40,7 @@ I = {
  "shield": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>',
 }
 
-BRAND = '<a class="brand" href="index.html" aria-label="Skyline — الصفحة الرئيسية"><img class="logo-light" src="assets/logo.png" alt="Skyline — upvc for doors and windows — لاعمال البي في سي — باب وشباك" width="896" height="508"><img class="logo-dark" src="assets/logo-dark.png" alt="" aria-hidden="true" width="896" height="508"></a>'
+BRAND = '<a class="brand" href="index.html" aria-label="Skyline — الصفحة الرئيسية"><img class="logo-light" src="assets/logo-tagline.png" alt="Skyline — upvc for doors and windows — لاعمال البي في سي — باب وشباك — الإختيار الراقي لمن يُقدر التفاصيل" width="896" height="629"><img class="logo-dark" src="assets/logo-tagline-dark.png" alt="" aria-hidden="true" width="896" height="629"></a>'
 
 NAV = [("index.html", "الرئيسية"), ("index.html#about", "عن الشركة"), ("projects.html", "مشاريعنا"), ("gallery.html", "معرض الصور"), ("index.html#faq", "الأسئلة الشائعة"), ("contact.html", "تواصل معنا")]
 
@@ -100,7 +100,7 @@ def jsonld():
         "description": "توريد وتركيب أبواب وشبابيك uPVC وشيش حصيرة وتقفيل بلكونات في جميع محافظات مصر — المعرض الرئيسي في مدينة نصر، القاهرة.",
         "slogan": "الاختيار الراقي لمن يُقَدِّر التفاصيل",
         "url": SITE,
-        "logo": SITE + "assets/logo.png",
+        "logo": SITE + "assets/logo-tagline.png",
         "image": [SITE + "assets/og-image.jpg", SITE + "assets/hero-doors.jpg"],
         "telephone": "+201111934900",
         "foundingDate": "2019",
@@ -271,16 +271,15 @@ def page_index():
       <p class="slogan reveal reveal-d3"><span>الاختيار الراقي</span> لمن يُقَدِّر التفاصيل</p>
     </div>
     <div class="hero-media reveal reveal-left reveal-d2">
-      <figure class="hero-video"><video id="hero-video" poster="assets/video/poster.jpg" autoplay muted loop playsinline preload="auto" width="1280" height="720" aria-label="فيديو تعريفي عن مواصفات خامات Skyline"><source src="assets/video/skyline-intro.mp4" type="video/mp4"><source src="assets/video/skyline-intro.webm" type="video/webm"></video>
-        <button type="button" class="vid-sound" id="vid-sound" aria-label="تشغيل الصوت" aria-pressed="false"><svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m23 9-6 6M17 9l6 6"/></svg><svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg><span class="vs-label">شغّل الصوت</span></button></figure>
-      <div class="hero-badge"><span class="hb-icon">{I["shield"]}</span><div><strong dir="ltr">600+</strong><span>مشروع نفّذناه</span></div></div>
+      <figure class="hero-video"><video id="hero-video" poster="assets/video/poster.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback width="1280" height="720" aria-label="فيديو تعريفي عن مواصفات خامات Skyline"><source src="assets/video/skyline-intro.webm" type="video/webm"><source src="assets/video/skyline-intro.mp4" type="video/mp4"></video></figure>
+      <div class="hero-badge"><span class="hb-icon">{I["shield"]}</span><div><strong dir="ltr">1000+</strong><span>مشروع نفّذناه</span></div></div>
     </div>
   </div>
 </section>
 
 <section class="stats-band">
   <div class="container stats">
-    <div class="stat reveal"><span class="stat-num" data-count="600" data-suffix="+">0</span><span class="stat-label">مشروع نفّذناه</span></div>
+    <div class="stat reveal"><span class="stat-num" data-count="1000" data-suffix="+">0</span><span class="stat-label">مشروع نفّذناه</span></div>
     <div class="stat reveal reveal-d1"><span class="stat-num" data-count="27">0</span><span class="stat-label">بنشتغل في جميع محافظات مصر</span></div>
     <div class="stat reveal reveal-d2"><span class="stat-num" id="fb-followers" data-count="18000" data-format="k">0</span><span class="stat-label">متابع على فيسبوك</span></div>
   </div>
@@ -389,7 +388,7 @@ def page_about():
 <section class="section" style="padding-top:24px">
   <div class="container two-col">
     <div class="reveal reveal-right">
-      <span class="about-logo"><img class="logo-light" src="assets/logo.png" alt="شعار Skyline" width="896" height="508"><img class="logo-dark" src="assets/logo-dark.png" alt="" aria-hidden="true" width="896" height="508"></span>
+      <span class="about-logo"><img class="logo-light" src="assets/logo-tagline.png" alt="شعار Skyline — الإختيار الراقي لمن يُقدر التفاصيل" width="896" height="629"><img class="logo-dark" src="assets/logo-tagline-dark.png" alt="" aria-hidden="true" width="896" height="629"></span>
       <p class="quote">«الاختيار الراقي لمن يُقَدِّر التفاصيل» 💎</p>
       <p class="muted">ده الشعار اللي الشركة بتختم بيه منشوراتها. في المشاريع المنشورة، الشغل بيتأسس بنظام «الخدمة الشاقة»: تدعيم داخلي بحديد مجلفن (1.25 مم) بكامل القطاع، وعجل جرار نحاس، ومفصلات صلب، وتقفيل بالسيليكون والفوم.</p>
       <h3 style="margin-top:28px">مواصفاتنا — زي ما الشركة نشرتها</h3>
@@ -443,13 +442,13 @@ def page_projects():
 FAQ = [
     ("فين معرضكم؟", f"<p>المعرض الرئيسي: <a href=\"{MAPS}\" target=\"_blank\" rel=\"noopener\">{ADDRESS}</a>.</p>"),
     ("إزاي أحجز معاينة أو أستفسر؟", "<p>للحجز والاستفسار وطلب المعاينات: <span dir=\"ltr\">01111934900</span> – <span dir=\"ltr\">01080477077</span>، أو على واتساب <span dir=\"ltr\">+20 11 11934900</span>.</p>"),
-    ("بتشتغلوا في أنهي مناطق؟", "<p>جميع محافظات مصر.</p>"),
-    ("أنهي قطاعات uPVC بتستخدموها؟", "<p>جميع قطاعات الـ UPVC.</p>"),
+    ('بتشتغلوا في أنهي مناطق؟', '<p>في Skyline بنسعد بتقديم خدماتنا في جميع أنحاء القاهرة الكبرى والمدن الجديدة، ومستعدين للوصول إليك في كل محافظات الجمهورية.</p>'),
+    ('أنهي قطاعات uPVC بتستخدموها؟', '<p>في Skyline، بنوفر مجموعة منتقاة من أفضل قطاعات الـ UPVC (الأوروبية، التركية، والمصرية) لتلبية كافة الاحتياجات والأذواق المعمارية والميزانيات، ومن أبرزها:</p><ul><li><strong>قطاع ديكونيك (Deceuninck) البلجيكي:</strong> قمة التكنولوجيا الأوروبية، خيار النخبة لمن يبحث عن أقصى درجات الفخامة، العزل الفائق، والعمر الافتراضي الطويل.</li><li><strong>قطاع كومبين (Kompen) التركي:</strong> فخامة القطاعات التركية المعتمدة وأعلاها متانة وقوة تحمل.</li><li><strong>قطاع كاترا (Katra):</strong> الصلابة المثالية والحل الأمثل للمساحات والفتحات الكبيرة.</li><li><strong>قطاعات كرافت لاين (Kraftline)، مايسترو (Maestro)، ووينتك (Wintech):</strong> خيارات متميزة جداً وعملية تجمع بين الجودة العالية والتكلفة الاقتصادية.</li></ul>'),
     ("إيه أنواع الزجاج المتاحة؟", "<p>في المشاريع المنشورة: زجاج سنجل، ودبل بفراغ 9 مم، وعاكس أبيض وبني، ومصنفر للحمامات والخصوصية، وزجاج سان جوبان (Saint-Gobain).</p>"),
     ("إيه أنظمة الفتح اللي بتنفذوها؟", "<p>جرار (2 و4 ضلفة)، مفصلي، منطبق، باندا، وتصميمات خاصة زي الشباك الدائري. ومعاها سلك متحرك أو بليسيه أو ثابت، وشيش حصيرة يدوي.</p>"),
-    ("بتعملوا تقفيل بلكونات؟", "<p>أيوه، فيه مشروع تقفيل بلكونة منشور في مدينة نصر بقطاع كاترا وزجاج دبل عاكس ومصنفر.</p>"),
+    ('بتعملوا تقفيل بلكونات؟', '<p>بكل تأكيد! تقفيل البلكونات بالـ UPVC هو واحد من أهم تخصصاتنا والأكثر طلباً في Skyline.</p><p>إحنا بنعتبر تقفيل البلكونة مش مجرد تركيب شبابيك، ده استثمار ذكي لتحويل مساحة مهدرة أو معرضة للتراب والدوشة لـ "غرفة إضافية" نظيفة، هادية، ومريحة جداً للاستخدام طول السنة.</p><p><strong>ليه تقفل بلكونتك مع Skyline؟</strong></p><ul><li><strong>عزل تام للأتربة والضوضاء:</strong> بفضل التقفيل الهندسي المحكم واستخدام الزجاج الدبل (سان جوبان)، بنفصلك تماماً عن إزعاج الشارع.</li><li><strong>تأسيس يتحمل ضغط الهواء:</strong> لأن البلكونات (خاصة في الأدوار العالية) بتتعرض لتيارات هواء قوية، بندعم قطاعاتنا بحديد مجلفن (سمك 1.25 مم) لضمان أقصى درجات الصلابة والأمان.</li><li><strong>تصميمات تناسب مساحتك:</strong> بنوفر كل الحلول (أنظمة الجرار لتوفير المساحة، الشباك المنطبق "Folding" لفتح البلكونة بالكامل، والأنظمة الثابتة)، بالإضافة لتوفير "سلك متحرك أو بليسيه" للتهوية بدون حشرات.</li><li><strong>مقاومة العوامل الجوية:</strong> قطاعاتنا لا تتأثر بحرارة الشمس أو الأمطار، ولا تتعرض للصدأ أو التآكل.</li></ul>'),
     ("إزاي بيتأسس الشغل؟", "<p>حسب المنشورات: تدعيم داخلي بحديد مجلفن (1.25 مم) بكامل القطاع، عجل جرار نحاس، مفصلات صلب، وتقفيل بالسيليكون والفوم.</p>"),
-    ("بتعملوا حاجة غير الشبابيك؟", "<p>فيه مشروع منشور لمطبخ ألومنيوم بواجهات كلادينج في مدينة نصر.</p>"),
+    ('بتعملوا حاجة غير الشبابيك؟', '<p>بكل تأكيد! في Skyline نحن نقدم حلولاً متكاملة لتشطيب وتجهيز بيتك بأعلى معايير الجودة، ولا نقتصر على الشبابيك فقط. تشمل خدماتنا:</p><ul><li><strong>الأبواب (UPVC):</strong> نصمم وننفذ أبواب الغرف، الحمامات، والبلكونات. تتميز بعزلها التام للصوت والمياه، ولا تتأثر بالرطوبة أو الحشرات نهائياً مقارنة بالأبواب الخشبية التقليدية.</li><li><strong>مطابخ الألومنيوم والكلادينج:</strong> نصنع مطابخ تجمع بين المتانة الفائقة والشكل المودرن. نؤسس المطبخ بقوائم ألومنيوم صلبة للخدمة الشاقة، مع أرفف وأرضيات بسمك (4 مم) لتحمل الأوزان، وواجهات "كلادينج" عصرية مقاومة للحرارة والمياه وسهلة التنظيف.</li><li><strong>الشيش حصيرة (Shutters):</strong> نوفر أنظمة الشيش حصيرة (اليدوية والمزودة بموتور للتحكم عن بعد)، والتي تمنحك أماناً إضافياً، عزلاً حرارياً ممتازاً، وتحكماً كاملاً في درجة الإضاءة والخصوصية.</li><li><strong>تقفيل البلكونات والقواطع الداخلية:</strong> نحول البلكونات والمساحات المهدرة إلى غرف معزولة تماماً، وننفذ قواطع (Partitions) لتقسيم المساحات الواسعة في المنازل أو الشركات بشياكة وخصوصية.</li><li><strong>التصميمات المعمارية الخاصة:</strong> ننفذ أصعب الأشكال الهندسية مثل الدورانات، الأقواس، وأنظمة الفتح الكبيرة (المنطبق والباندا) للواجهات البانورامية.</li></ul>'),
     ("الأسعار ومدة الضمان كام؟", "<p>الضمان 10 سنوات على القطاع و5 سنوات على الإكسسوارات. السعر بيتحدد حسب المقاسات والقطاع والزجاج — <a href=\"quote.html\">اطلب عرض سعر</a>.</p>"),
 ]
 

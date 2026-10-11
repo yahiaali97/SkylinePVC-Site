@@ -89,7 +89,7 @@ p { margin: 0 0 1em; }
 .site-header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .brand { display: inline-flex; flex: none; text-decoration: none; }
 /* logo: slightly stretched horizontally (~11%) for a wider, steadier wordmark */
-.brand img, .about-logo img { aspect-ratio: 896 / 457; object-fit: fill; }
+.brand img, .about-logo img { aspect-ratio: 896 / 566; object-fit: fill; }
 .brand img { height: 54px; width: auto; transition: height .3s; }
 .site-header.scrolled .brand img { height: 46px; }
 .logo-light { display: none !important; }
@@ -426,7 +426,7 @@ p { margin: 0 0 1em; }
 
 /* ===== Footer ===== */
 .site-footer { background: #050d16; color: #9cb2c6; padding: 64px 0 28px; border-top: 1px solid rgba(255,255,255,.06); }
-.site-footer .brand img { height: 84px; }
+.site-footer .brand img { height: 100px; }
 .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 36px; }
 @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; } }
 .site-footer h4 { margin: 0 0 14px; font-size: .98rem; color: #eef5fb; }
@@ -511,7 +511,7 @@ p { margin: 0 0 1em; }
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(110deg, transparent 38%, rgba(255,255,255,.75) 50%, transparent 62%) no-repeat;
   background-size: 260% 100%; background-position: 160% 0;
-  -webkit-mask: url("../logo-dark.png") center / 100% 100% no-repeat; mask: url("../logo-dark.png") center / 100% 100% no-repeat;
+  -webkit-mask: url("../logo-tagline-dark.png") center / 100% 100% no-repeat; mask: url("../logo-tagline-dark.png") center / 100% 100% no-repeat;
   transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .35s cubic-bezier(.2,.7,.2,1);
 }
 .brand:hover img, .brand:focus-visible img {
@@ -536,18 +536,20 @@ p { margin: 0 0 1em; }
 .hero-badge { top: 16px; inset-inline-end: 16px; }
 
 /* ===== Header logo legibility ===== */
-.site-header { --header-h: 84px; }
-.site-header.scrolled { --header-h: 72px; }
-.brand img { height: 66px; }
-.site-header.scrolled .brand img { height: 58px; }
+.site-header { --header-h: 96px; }
+.brand img { height: 80px; }
+.site-header.scrolled .brand img { height: 68px; }
 .site-header .brand img, :root[data-theme="light"] .site-header .brand img {
   filter: drop-shadow(0 1px 0 #0b4f82) drop-shadow(1px 2px 3px rgba(0,0,0,.45));
 }
 .site-header .brand:hover img { filter: drop-shadow(0 1px 0 #0b4f82) drop-shadow(1px 1px 0 #093e66) drop-shadow(3px 6px 10px rgba(0,0,0,.5)); }
-@media (max-width: 560px) { .brand img { height: 56px; } .site-header { --header-h: 76px; } }
+@media (max-width: 560px) { .brand img { height: 66px; } .site-header { --header-h: 84px; } }
 
 /* ===== Logo: flat by default, 3D only on hover ===== */
-.brand img, .site-header .brand img, :root[data-theme="light"] .site-header .brand img, :root[data-theme="light"] .brand img { filter: none; }
+.brand img, :root[data-theme="light"] .brand img { filter: none; }
+.site-header .brand img, :root[data-theme="light"] .site-header .brand img {
+  filter: drop-shadow(.8px .8px 0 rgba(11,79,130,.85)) drop-shadow(1px 2px 2px rgba(0,0,0,.18));
+}
 .brand:hover img, .brand:focus-visible img, .site-header .brand:hover img {
   filter: drop-shadow(1px 1px 0 #0b4f82) drop-shadow(1px 1px 0 #093e66) drop-shadow(4px 7px 12px rgba(0,0,0,.45));
 }
@@ -662,9 +664,9 @@ p { margin: 0 0 1em; }
 :root[data-theme="light"] .spec-list li strong { color: var(--brand); }
 #about { scroll-margin-top: 90px; }
 /* keep header height constant while scrolling so anchors land precisely */
-.site-header.scrolled { --header-h: 84px; }
-@media (max-width: 560px) { .site-header.scrolled { --header-h: 76px; } }
-#about { scroll-margin-top: 112px; }
+.site-header.scrolled { --header-h: 96px; }
+@media (max-width: 560px) { .site-header.scrolled { --header-h: 84px; } }
+#about { scroll-margin-top: 124px; }
 
 /* WhatsApp CTA card */
 .cs-item a { color: inherit; text-decoration: none; }
@@ -818,16 +820,14 @@ img, video, iframe, canvas { max-width: 100%; }
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
   -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
   mask-composite: intersect; background: transparent; }
-.vid-sound { bottom: 9%; right: 7%; }
 
-/* ===== Mobile: logo centered in the header ===== */
+/* ===== Mobile: logo on the right (start side), actions on the left ===== */
 @media (max-width: 960px) {
-  .site-header .container { position: relative; justify-content: flex-start; }
-  .site-header .container > .brand { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  .site-header .container { position: relative; justify-content: space-between; }
+  .site-header .container > .brand { position: static; transform: none; }
   .site-header .header-actions { margin-inline-start: auto; }
 }
 
-@media (max-width: 560px) { .vid-sound { height: 30px; padding: 0 10px; gap: 5px; font-size: .72rem; bottom: 4%; right: 3%; } .vid-sound svg { width: 14px; height: 14px; } }
 /* ===== "600+ مشروع نفّذناه" badge: small, top-right corner of the video ===== */
 .hero-media .hero-badge { display: flex; z-index: 3; top: 3.5%; inset-inline-start: 2.5%; inset-inline-end: auto; padding: 6px 10px; gap: 7px; border-radius: 12px; }
 .hero-media .hero-badge .hb-icon { width: 28px; height: 28px; border-radius: 8px; }
@@ -840,4 +840,20 @@ img, video, iframe, canvas { max-width: 100%; }
   .hero-media .hero-badge > div { display: flex; align-items: baseline; gap: 5px; }
   .hero-media .hero-badge strong { font-size: .82rem; }
   .hero-media .hero-badge span { font-size: .66rem; margin: 0; }
+}
+
+/* hero video plays like a GIF: no controls, not interactive */
+.hero-video video { pointer-events: none; }
+.faq .answer ul { margin: 4px 0 10px; padding-inline-start: 22px; display: grid; gap: 8px; }
+.faq .answer li strong { color: var(--text); font-weight: 600; }
+
+/* ===== Scroll reveal: no fade — content is always visible and glides smoothly into place ===== */
+.reveal, .reveal-left, .reveal-right, .hero-media.reveal {
+  opacity: 1 !important; filter: none !important; clip-path: none !important;
+  transform: translate3d(0, 56px, 0);
+  transition: transform 1.05s cubic-bezier(.22,.61,.36,1) !important; will-change: transform;
+}
+.reveal.in, .reveal-left.in, .reveal-right.in, .hero-media.reveal.in { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right, .hero-media.reveal { transform: none !important; transition: none !important; }
 }

@@ -40,7 +40,7 @@ I = {
  "shield": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>',
 }
 
-BRAND = '<a class="brand" href="index.html" aria-label="Skyline — الصفحة الرئيسية"><img class="logo-light" src="assets/logo-tagline.png" alt="Skyline — upvc for doors and windows — لاعمال البي في سي — باب وشباك — الإختيار الراقي لمن يُقدر التفاصيل" width="896" height="629"><img class="logo-dark" src="assets/logo-tagline-dark.png" alt="" aria-hidden="true" width="896" height="629"></a>'
+BRAND = '<a class="brand" href="index.html" aria-label="Skyline — الصفحة الرئيسية"><img class="logo-light" src="assets/logo-tagline.png" alt="Skyline — upvc for doors and windows — لاعمال البي في سي — باب وشباك — الإختيار الراقي لمن يُقَدِّر التفاصيل" width="896" height="629"><img class="logo-dark" src="assets/logo-tagline-dark.png" alt="" aria-hidden="true" width="896" height="629"></a>'
 
 NAV = [("index.html", "الرئيسية"), ("index.html#about", "عن الشركة"), ("projects.html", "مشاريعنا"), ("gallery.html", "معرض الصور"), ("index.html#faq", "الأسئلة الشائعة"), ("contact.html", "تواصل معنا")]
 
@@ -98,7 +98,7 @@ def jsonld():
         "name": "Skyline - For UPVC & Shutter",
         "alternateName": ["سكاي لاين لأعمال اليو بي في سي", "Skyline uPVC", "سكاي لاين باب وشباك"],
         "description": "توريد وتركيب أبواب وشبابيك uPVC وشيش حصيرة وتقفيل بلكونات في جميع محافظات مصر — المعرض الرئيسي في مدينة نصر، القاهرة.",
-        "slogan": "الاختيار الراقي لمن يُقَدِّر التفاصيل",
+        "slogan": "الإختيار الراقي لمن يُقَدِّر التفاصيل",
         "url": SITE,
         "logo": SITE + "assets/logo-tagline.png",
         "image": [SITE + "assets/og-image.jpg", SITE + "assets/hero-doors.jpg"],
@@ -268,7 +268,7 @@ def page_index():
         <a class="btn btn-primary" href="quote.html">{I["doc"]}اطلب عرض سعر</a>
         <a class="btn btn-ghost" href="projects.html">{I["video"]}شوف مشاريعنا</a>
       </div>
-      <p class="slogan reveal reveal-d3"><span>الاختيار الراقي</span> لمن يُقَدِّر التفاصيل</p>
+      <p class="slogan reveal reveal-d3"><span>الإختيار الراقي</span> لمن يُقَدِّر التفاصيل</p>
     </div>
     <div class="hero-media reveal reveal-left reveal-d2">
       <figure class="hero-video"><video id="hero-video" poster="assets/video/poster.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback width="1280" height="720" aria-label="فيديو تعريفي عن مواصفات خامات Skyline"><source src="assets/video/skyline-intro.webm" type="video/webm"><source src="assets/video/skyline-intro.mp4" type="video/mp4"></video></figure>
@@ -293,7 +293,7 @@ def page_index():
       <p class="lead-p">Skyline - For UPVC &amp; Shutter شركة متخصصة في توريد وتركيب أبواب وشبابيك الـ uPVC والشيش الحصيرة، ومعرضها الرئيسي في مدينة نصر. بدأنا سنة 2019 بفكرة بسيطة: الشباك اللي بيتركب في بيتك لازم يعيش معاك العمر كله.</p>
       <p class="muted">عشان كده بنهتم بالتفاصيل اللي ما بتتشافش بسهولة: التدعيم اللي جوه القطاع، نوع العجل والمفصلات، طريقة التقفيل، ودقة المقاس. كل عملية بنختار لها النظام المناسب — جرار، منطبق، باندا أو مفصلي — والزجاج المناسب للعزل والخصوصية.</p>
       <ul class="check-list">
-        <li><strong>قطاعات معروفة:</strong> كاترا، كومبين، مايسترو، كرافت لاين.</li>
+        <li><strong>قطاعات معروفة:</strong> ديكونيك، كاترا، كومبين، مايسترو، كرافت لاين، وينتك.</li>
         <li><strong>زجاج:</strong> سنجل ودبل وعاكس ومصنفر، وزجاج سان جوبان.</li>
         <li><strong>تأسيس:</strong> حديد مجلفن 1.25 مم، عجل نحاس، مفصلات صلب.</li>
       </ul>
@@ -388,8 +388,8 @@ def page_about():
 <section class="section" style="padding-top:24px">
   <div class="container two-col">
     <div class="reveal reveal-right">
-      <span class="about-logo"><img class="logo-light" src="assets/logo-tagline.png" alt="شعار Skyline — الإختيار الراقي لمن يُقدر التفاصيل" width="896" height="629"><img class="logo-dark" src="assets/logo-tagline-dark.png" alt="" aria-hidden="true" width="896" height="629"></span>
-      <p class="quote">«الاختيار الراقي لمن يُقَدِّر التفاصيل» 💎</p>
+      <span class="about-logo"><img class="logo-light" src="assets/logo-tagline.png" alt="شعار Skyline — الإختيار الراقي لمن يُقَدِّر التفاصيل" width="896" height="629"><img class="logo-dark" src="assets/logo-tagline-dark.png" alt="" aria-hidden="true" width="896" height="629"></span>
+      <p class="quote">«الإختيار الراقي لمن يُقَدِّر التفاصيل» 💎</p>
       <p class="muted">ده الشعار اللي الشركة بتختم بيه منشوراتها. في المشاريع المنشورة، الشغل بيتأسس بنظام «الخدمة الشاقة»: تدعيم داخلي بحديد مجلفن (1.25 مم) بكامل القطاع، وعجل جرار نحاس، ومفصلات صلب، وتقفيل بالسيليكون والفوم.</p>
       <h3 style="margin-top:28px">مواصفاتنا — زي ما الشركة نشرتها</h3>
       <ul class="check-list"><li><strong>عجل نحاس أصلي</strong> — بيتحرك بسهولة وبيعيش سنين من غير صوت ولا تعطل.</li><li><strong>مفصلات صلب معالج</strong> — للفتح والقفل اليومي لسنين.</li><li><strong>حديد داعم سماكة عالية</strong> — للحلق والضلف وضلفة السلك.</li><li><strong>مقابض فاخرة</strong> من موردين مختارين.</li><li><strong>سبليونات إقفال كاملة</strong> — إقفال طولي بطول الضلفة.</li></ul>

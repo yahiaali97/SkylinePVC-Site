@@ -42,7 +42,7 @@ I = {
 
 BRAND = '<a class="brand" href="index.html" aria-label="Skyline — الصفحة الرئيسية"><img class="logo-light" src="assets/logo-tagline.png" alt="Skyline — upvc for doors and windows — لاعمال البي في سي — باب وشباك — الإختيار الراقي لمن يُقَدِّر التفاصيل" width="896" height="629"><img class="logo-dark" src="assets/logo-tagline-dark.png" alt="" aria-hidden="true" width="896" height="629"></a>'
 
-NAV = [("index.html", "الرئيسية"), ("index.html#about", "عن الشركة"), ("projects.html", "مشاريعنا"), ("gallery.html", "معرض الصور"), ("index.html#faq", "الأسئلة الشائعة"), ("contact.html", "تواصل معنا")]
+NAV = [("index.html", "الرئيسية"), ("index.html#about", "عن الشركة"), ("projects.html", "مشاريعنا"), ("gallery.html", "معرض الصور"), ("reviews.html", "آراء العملاء"), ("index.html#faq", "الأسئلة الشائعة"), ("contact.html", "تواصل معنا")]
 
 
 SITE = "https://yahiaali97.github.io/SkylinePVC-Site/"
@@ -554,6 +554,28 @@ def page_gallery():
 ''' + footer()
 
 
+def page_reviews():
+    return head("آراء العملاء في شبابيك وأبواب uPVC | Skyline سكاي لاين", "تقييمات وآراء عملاء Skyline الحقيقية من صفحة فيسبوك الرسمية — شبابيك وأبواب uPVC وتقفيل بلكونات وشيش حصيرة.") + header("reviews.html") + phero(
+        "آراء العملاء", "آراء العملاء", "عملاؤنا بيقولوا إيه.", "تقييمات حقيقية كتبها عملاؤنا على صفحة Skyline الرسمية على فيسبوك، وبتتحدّث هنا تلقائياً.") + f'''
+<section class="section" style="padding-top:24px">
+  <div class="container">
+    <div class="rv-summary reveal" id="rv-summary" hidden>
+      <div class="rv-count"><strong id="rv-count">—</strong><span>تقييم على فيسبوك</span></div>
+      <a class="btn btn-ghost btn-sm" href="{FB}/reviews" target="_blank" rel="noopener">{I["fb"]}كل التقييمات على فيسبوك</a>
+    </div>
+    <div class="reviews-grid" id="reviews-grid" aria-live="polite"></div>
+    <div class="rv-empty reveal" id="rv-empty" hidden>
+      <span class="card-icon">{I["fb"]}</span>
+      <h2>التقييمات على صفحتنا في فيسبوك</h2>
+      <p>اقرأ آراء عملائنا مباشرةً على صفحة Skyline الرسمية.</p>
+      <a class="btn btn-primary btn-sm" href="{FB}/reviews" target="_blank" rel="noopener">{I["fb"]}شوف التقييمات</a>
+    </div>
+    <div class="more-box reveal"><p>اتعاملت معانا؟ رأيك بيفرق معانا ومع اللي جايين بعدك.</p><div class="hero-actions"><a class="btn btn-primary btn-sm" href="{FB}/reviews" target="_blank" rel="noopener">{I["fb"]}اكتب تقييمك</a><a class="btn btn-ghost btn-sm" href="quote.html">{I["doc"]}اطلب عرض سعر</a></div></div>
+  </div>
+</section>
+''' + footer()
+
+
 REDIRECT = '''<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>Skyline</title>
 <meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0; url=index.html#about"><link rel="canonical" href="index.html#about">
 <script>location.replace("index.html#about")</script></head><body><a href="index.html#about">عن الشركة</a></body></html>
@@ -564,7 +586,7 @@ def write_seo_files():
     import datetime
     today = datetime.date.today().isoformat()
     urls = [("", "1.0", "weekly"), ("projects.html", "0.8", "weekly"), ("gallery.html", "0.7", "monthly"),
-            ("quote.html", "0.8", "monthly"), ("contact.html", "0.7", "monthly")]
+            ("quote.html", "0.8", "monthly"), ("reviews.html", "0.7", "weekly"), ("contact.html", "0.7", "monthly")]
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
         f"  <url><loc>{SITE}{u}</loc><lastmod>{today}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>\n" for u, pr, f in urls) + "</urlset>\n"
     (ROOT / "sitemap.xml").write_text(xml, encoding="utf-8")
@@ -577,7 +599,7 @@ def main():
     data = (ROOT / "assets/js/projects-data.js").read_text(encoding="utf-8")
     n = len(re.findall(r'\bid: "', data))
     pages = {"quote.html": page_quote(), "gallery.html": page_gallery(), "index.html": page_index().replace("{n}", str(n)), "about.html": REDIRECT, "projects.html": page_projects(),
-             "faq.html": REDIRECT.replace("#about", "#faq").replace("عن الشركة", "الأسئلة الشائعة"), "contact.html": page_contact()}
+             "faq.html": REDIRECT.replace("#about", "#faq").replace("عن الشركة", "الأسئلة الشائعة"), "contact.html": page_contact(), "reviews.html": page_reviews()}
     for name, html in pages.items():
         canon = SITE if name == "index.html" else SITE + name
         html = html.replace("__CANON__", canon).replace("__LD__", jsonld() if name == "index.html" else "")

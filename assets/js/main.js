@@ -391,6 +391,63 @@
     window.addEventListener("load", function () { goToHash(false); setTimeout(function () { goToHash(false); }, 300); });
   }
 
+  /* ---------- Customer reviews: assets/data/reviews.json is refreshed from Facebook by a GitHub Action ---------- */
+  var rvGrid = document.getElementById("reviews-grid");
+  if (rvGrid) {
+    var rvEsc = function (s) { return String(s || "").replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+    var rvDate = function (d) { try { return d ? new Date(d + "T12:00:00").toLocaleDateString("ar-EG", { year: "numeric", month: "long" }) : ""; } catch (e) { return d || ""; } };
+    var showEmpty = function () { var e = document.getElementById("rv-empty"); if (e) { e.hidden = false; e.classList.add("in"); } };
+    fetch("assets/data/reviews.json?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var items = (d && d.items) || [];
+      if (!items.length) { showEmpty(); return; }
+      var rec = items.filter(function (x) { return x.recommends !== false; }).length;
+      var sum = document.getElementById("rv-summary");
+      if (sum) {
+        document.getElementById("rv-count").textContent = Math.max(items.length, d.total_on_facebook || 0);
+        sum.hidden = false;
+      }
+      var rvHead = function (x) {
+        var name = (x.name || "").trim() || "عميل Skyline";
+        var inner = '<span class="rv-avatar" aria-hidden="true">' + rvEsc(name.charAt(0)) + '</span><div><strong>' + rvEsc(name) + '</strong><span>' + (rvDate(x.date) ? rvEsc(rvDate(x.date)) : (x.profile ? "على فيسبوك ↗" : "")) + '</span></div>';
+        var link = x.profile && /^https:\/\/(www\.)?facebook\.com\//.test(x.profile);
+        return '<header>' + (link ? '<a class="rv-who" href="' + rvEsc(x.profile) + '" target="_blank" rel="noopener noreferrer nofollow" title="حساب ' + rvEsc(name) + ' على فيسبوك">' + inner + '</a>' : '<div class="rv-who">' + inner + '</div>') +
+          '<span class="rv-badge' + (x.recommends === false ? " no" : "") + '">' + (x.recommends === false ? "لا يرشّح" : "يرشّح Skyline") + '</span></header>';
+      };
+      rvGrid.innerHTML = items.map(function (x, i) {
+        return '<article class="rv-card reveal reveal-d' + (i % 4) + '" data-i="' + i + '"><span class="rv-quote" aria-hidden="true">”</span>' + rvHead(x) +
+          '<p class="rv-text">' + rvEsc(x.text).replace(/\n/g, "<br>") + '</p>' +
+          '<button type="button" class="rv-more" aria-haspopup="dialog">عرض المزيد</button></article>';
+      }).join("");
+      // show the button only on reviews that are actually cut off
+      var markLong = function () { rvGrid.querySelectorAll(".rv-card").forEach(function (c) { var p = c.querySelector(".rv-text"); c.classList.toggle("is-long", p.scrollHeight > p.clientHeight + 2); }); };
+      markLong(); window.addEventListener("resize", markLong); if (document.fonts && document.fonts.ready) document.fonts.ready.then(markLong);
+      rvGrid.addEventListener("pointermove", function (e) {
+        var c = e.target.closest(".rv-card"); if (!c) return; var r = c.getBoundingClientRect();
+        c.style.setProperty("--rv-x", (e.clientX - r.left) + "px"); c.style.setProperty("--rv-y", (e.clientY - r.top) + "px");
+      });
+      // full review in a light pop-up
+      var modal = document.createElement("div");
+      modal.className = "rv-modal"; modal.hidden = true;
+      modal.innerHTML = '<div class="rv-modal-card rv-card" role="dialog" aria-modal="true" aria-label="التقييم كامل"><button type="button" class="rv-close" aria-label="إغلاق">✕</button><div class="rv-modal-body"></div></div>';
+      document.body.appendChild(modal);
+      var lastBtn = null, closeT = null;
+      var openRv = function (i, btn) {
+        var x = items[i]; if (!x) return; lastBtn = btn; clearTimeout(closeT);
+        modal.querySelector(".rv-modal-body").innerHTML = rvHead(x) + '<p class="rv-text full">' + rvEsc(x.text).replace(/\n/g, "<br>") + '</p>';
+        modal.hidden = false; document.documentElement.classList.add("rv-lock");
+        requestAnimationFrame(function () { requestAnimationFrame(function () { modal.classList.add("open"); modal.querySelector(".rv-close").focus(); }); });
+      };
+      var closeRv = function () {
+        if (modal.hidden) return; modal.classList.remove("open"); document.documentElement.classList.remove("rv-lock");
+        closeT = setTimeout(function () { modal.hidden = true; if (lastBtn) lastBtn.focus(); }, 220);
+      };
+      rvGrid.addEventListener("click", function (e) { var b = e.target.closest(".rv-more"); if (b) openRv(+b.closest(".rv-card").dataset.i, b); });
+      modal.addEventListener("click", function (e) { if (e.target === modal || e.target.closest(".rv-close")) closeRv(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeRv(); });
+      if (typeof setupReveal === "function") setupReveal(rvGrid);
+    }).catch(showEmpty);
+  }
+
   /* ---------- Hero video: silent, looping like a GIF ---------- */
   var hv = document.getElementById("hero-video");
   if (hv) { hv.muted = true; hv.defaultMuted = true; var pr = hv.play(); if (pr && pr.catch) pr.catch(function () {}); }

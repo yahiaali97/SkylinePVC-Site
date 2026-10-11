@@ -229,13 +229,30 @@
     ["dragleave", "drop"].forEach(function (ev) { dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.remove("drag"); }); });
     dz.addEventListener("drop", function (e) { var f = e.dataTransfer && e.dataTransfer.files[0]; if (f) setPhoto(f); });
 
+    /* phone: numbers only (Arabic digits are converted), optional + at the start */
+    var phoneIn = waForm.elements.phone;
+    function cleanPhone(v) {
+      v = String(v).replace(/[\u0660-\u0669]/g, function (d) { return d.charCodeAt(0) - 0x0660; })
+                   .replace(/[\u06F0-\u06F9]/g, function (d) { return d.charCodeAt(0) - 0x06F0; });
+      var plus = /^\s*\+/.test(v);
+      return (plus ? "+" : "") + v.replace(/\D/g, "");
+    }
+    function validPhone(v) {
+      return /^(\+?20|0020)?0?1[0125]\d{8}$/.test(v) || /^\+\d{8,15}$/.test(v);
+    }
+    phoneIn.addEventListener("input", function () {
+      var c = cleanPhone(phoneIn.value);
+      if (c !== phoneIn.value) phoneIn.value = c;
+      phoneIn.removeAttribute("aria-invalid");
+    });
+
     waForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var f = waForm.elements;
-      var name = f.name.value.trim(), phone = f.phone.value.trim();
+      var name = f.name.value.trim(), phone = cleanPhone(f.phone.value);
       okEl.hidden = true;
       if (!name || !phone) { showErr("من فضلك اكتب الاسم ورقم الموبايل."); (name ? f.phone : f.name).focus(); return; }
-      if (!/^[+\d][\d\s-]{6,}$/.test(phone)) { showErr("رقم الموبايل مش مظبوط."); f.phone.focus(); return; }
+      if (!validPhone(phone)) { showErr("اكتب رقم موبايل صحيح بالأرقام بس — مثلاً 01012345678"); f.phone.setAttribute("aria-invalid", "true"); f.phone.focus(); return; }
       showErr("");
       var lines = ["طلب عرض سعر جديد من الموقع", "الاسم: " + name, "الموبايل: " + phone];
       if (f.area.value.trim()) lines.push("المنطقة: " + f.area.value.trim());

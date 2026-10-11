@@ -5,6 +5,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 FB = "https://www.facebook.com/skylineupvcwindow"
 IG = "https://www.instagram.com/skylinepvc"
 WA = "https://wa.me/201111934900"
+EMAIL = "info@skylineupvc-eg.com"
 ADDRESS = "شارع حسن مأمون، مدينة نصر، الحي الثامن، القاهرة، مصر"
 MAPQ = "شارع حسن مأمون، مدينة نصر، الحي الثامن، القاهرة، مصر"
 
@@ -16,6 +17,7 @@ import time as _t
 ASSET_V = str(int(_t.time()))
 
 I = {
+ "mail": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>',
  "doc": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>',
  "upload": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>',
  "image": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>',
@@ -104,6 +106,7 @@ def jsonld():
         "logo": SITE + "assets/logo-tagline.png",
         "image": [SITE + "assets/og-image.jpg", SITE + "assets/hero-doors.jpg"],
         "telephone": "+201111934900",
+        "email": EMAIL,
         "foundingDate": "2019",
         "address": {"@type": "PostalAddress", "streetAddress": "شارع حسن مأمون، الحي الثامن", "addressLocality": "مدينة نصر",
                     "addressRegion": "القاهرة", "addressCountry": "EG"},
@@ -173,6 +176,7 @@ def footer(extra_scripts=""):
         <ul>
           <li><a href="tel:+201111934900" dir="ltr">01111934900</a></li>
           <li><a href="tel:+201080477077" dir="ltr">01080477077</a></li>
+          <li><a href="mailto:{EMAIL}" dir="ltr">{EMAIL}</a></li>
         </ul>
       </div>
     </div>
@@ -476,6 +480,7 @@ def page_contact():
       <a class="card contact-item reveal reveal-d1" href="{WA}" target="_blank" rel="noopener"><span class="card-icon">{I["wa"]}</span><div><strong>واتساب</strong><span>+20 11 11934900</span></div></a>
       <a class="card contact-item reveal reveal-d2" href="{FB}" target="_blank" rel="noopener"><span class="card-icon">{I["fb"]}</span><div><strong>فيسبوك</strong><span>skylineupvcwindow</span></div></a>
       <a class="card contact-item reveal reveal-d3" href="{IG}" target="_blank" rel="noopener"><span class="card-icon">{I["ig"]}</span><div><strong>إنستجرام</strong><span>@skylinepvc</span></div></a>
+      <a class="card contact-item reveal reveal-d3" href="mailto:{EMAIL}"><span class="card-icon">{I["mail"]}</span><div><strong>البريد الإلكتروني</strong><span dir="ltr">{EMAIL}</span></div></a>
     </div>
     <div class="card map-card reveal reveal-d1">
       <iframe title="خريطة المعرض الرئيسي" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="{MAP_EMBED}"></iframe>

@@ -1021,3 +1021,6 @@ html.rv-lock { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .site-header .brand, .site-header .brand::after, .rv-arc i { animation-duration: 5s !important; animation-iteration-count: infinite !important; }
 }
+/* email card on the contact page: full row, address on one line */
+.contact-item[href^="mailto:"] { grid-column: 1 / -1; }
+.contact-item[href^="mailto:"] span[dir="ltr"] { white-space: nowrap; }

@@ -143,10 +143,10 @@ def header(active):
 '''
 
 
-def phero(crumb, eyebrow, title, lead):
+def phero(crumb, eyebrow, title, lead, extra=""):
     return f'''<section class="page-hero"><div class="container">
   <nav class="crumbs reveal" aria-label="مسار الصفحة"><a href="index.html">الرئيسية</a><span>/</span><span>{crumb}</span></nav>
-  <p class="eyebrow reveal">{eyebrow}</p><h1 class="reveal reveal-d1">{title}</h1><p class="reveal reveal-d2">{lead}</p>
+  <p class="eyebrow reveal">{eyebrow}</p><h1 class="reveal reveal-d1">{title}</h1><p class="reveal reveal-d2">{lead}</p>{extra}
 </div></section>'''
 
 
@@ -556,7 +556,8 @@ def page_gallery():
 
 def page_reviews():
     return head("آراء العملاء في شبابيك وأبواب uPVC | Skyline سكاي لاين", "تقييمات وآراء عملاء Skyline الحقيقية من صفحة فيسبوك الرسمية — شبابيك وأبواب uPVC وتقفيل بلكونات وشيش حصيرة.") + header("reviews.html") + phero(
-        "آراء العملاء", "آراء العملاء", "عملاؤنا بيقولوا إيه.", "تقييمات حقيقية كتبها عملاؤنا على صفحة Skyline الرسمية على فيسبوك، وبتتحدّث هنا تلقائياً.") + f'''
+        "آراء العملاء", "آراء العملاء", "عملاؤنا بيقولوا إيه.", "تقييمات حقيقية كتبها عملاؤنا على صفحة Skyline الرسمية على فيسبوك، وبتتحدّث هنا تلقائياً.", extra='''
+  <div class="rv-hero-badge reveal reveal-d3" aria-label="100% من العملاء بيرشحوا Skyline"><p class="rv-hero-pct"><strong id="rv-pct-hero">100%</strong><span>ترشيح</span></p><div class="rv-arc" aria-hidden="true"><i style="--i:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.85 6 6.55.78-4.84 4.5 1.28 6.52L12 17.18 6.16 20.4l1.28-6.52L2.6 9.38l6.55-.78z"/></svg></i><i style="--i:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.85 6 6.55.78-4.84 4.5 1.28 6.52L12 17.18 6.16 20.4l1.28-6.52L2.6 9.38l6.55-.78z"/></svg></i><i style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.85 6 6.55.78-4.84 4.5 1.28 6.52L12 17.18 6.16 20.4l1.28-6.52L2.6 9.38l6.55-.78z"/></svg></i><i style="--i:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.85 6 6.55.78-4.84 4.5 1.28 6.52L12 17.18 6.16 20.4l1.28-6.52L2.6 9.38l6.55-.78z"/></svg></i><i style="--i:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.85 6 6.55.78-4.84 4.5 1.28 6.52L12 17.18 6.16 20.4l1.28-6.52L2.6 9.38l6.55-.78z"/></svg></i></div></div>''') + f'''
 <section class="section" style="padding-top:24px">
   <div class="container">
     <div class="rv-summary reveal" id="rv-summary" hidden>
@@ -564,6 +565,7 @@ def page_reviews():
       <a class="btn btn-ghost btn-sm" href="{FB}/reviews" target="_blank" rel="noopener">{I["fb"]}كل التقييمات على فيسبوك</a>
     </div>
     <div class="reviews-grid" id="reviews-grid" aria-live="polite"></div>
+    <div class="rv-load" id="rv-load" hidden><button type="button" class="btn btn-ghost" id="rv-load-btn">عرض المزيد من التقييمات <span class="rv-load-n" id="rv-load-n"></span></button></div>
     <div class="rv-empty reveal" id="rv-empty" hidden>
       <span class="card-icon">{I["fb"]}</span>
       <h2>التقييمات على صفحتنا في فيسبوك</h2>

@@ -419,8 +419,27 @@
           '<button type="button" class="rv-more" aria-haspopup="dialog">عرض المزيد</button></article>';
       }).join("");
       // show the button only on reviews that are actually cut off
-      var markLong = function () { rvGrid.querySelectorAll(".rv-card").forEach(function (c) { var p = c.querySelector(".rv-text"); c.classList.toggle("is-long", p.scrollHeight > p.clientHeight + 2); }); };
-      markLong(); window.addEventListener("resize", markLong); if (document.fonts && document.fonts.ready) document.fonts.ready.then(markLong);
+      var markLong = function () { rvGrid.querySelectorAll(".rv-card:not(.rv-off)").forEach(function (c) { var p = c.querySelector(".rv-text"); c.classList.toggle("is-long", p.scrollHeight > p.clientHeight + 2); }); };
+      // 5 rows at a time, "عرض المزيد من التقييمات" adds 5 more rows
+      var ROWS = 5, shownRows = ROWS, cards = [].slice.call(rvGrid.children);
+      var loadBox = document.getElementById("rv-load"), loadBtn = document.getElementById("rv-load-btn"), loadN = document.getElementById("rv-load-n");
+      var cols = function () { var c = getComputedStyle(rvGrid).gridTemplateColumns.split(" ").filter(Boolean).length; return Math.max(1, c || 1); };
+      var paint = function (animateFrom) {
+        var limit = shownRows * cols();
+        cards.forEach(function (c, k) {
+          var off = k >= limit; c.classList.toggle("rv-off", off);
+          if (!off && animateFrom != null && k >= animateFrom) { c.classList.add("in", "rv-pop"); c.style.animationDelay = ((k - animateFrom) % 6) * 0.06 + "s"; }
+        });
+        var left = Math.max(0, cards.length - limit);
+        if (loadBox) { loadBox.hidden = left === 0; if (loadN) loadN.textContent = "(" + left + ")"; }
+        markLong();
+      };
+      paint();
+      if (loadBtn) loadBtn.addEventListener("click", function () { var from = shownRows * cols(); shownRows += ROWS; paint(from); });
+      window.addEventListener("resize", function () { paint(); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(markLong);
+      var pctHero = document.getElementById("rv-pct-hero");
+      if (pctHero) pctHero.textContent = Math.round(rec * 100 / items.length) + "%";
       rvGrid.addEventListener("pointermove", function (e) {
         var c = e.target.closest(".rv-card"); if (!c) return; var r = c.getBoundingClientRect();
         c.style.setProperty("--rv-x", (e.clientX - r.left) + "px"); c.style.setProperty("--rv-y", (e.clientY - r.top) + "px");

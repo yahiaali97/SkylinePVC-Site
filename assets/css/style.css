@@ -953,3 +953,71 @@ img, video, iframe, canvas { max-width: 100%; }
 html.rv-lock { overflow: hidden; }
 @media (max-width: 560px) { .rv-modal { align-items: end; padding: 0; } .rv-modal-card { width: 100%; max-height: 85vh; border-radius: 22px 22px 0 0; transform: translateY(30px); } }
 @media (prefers-reduced-motion: reduce) { .rv-modal, .rv-modal-card { transition: none; } }
+
+/* ===== Reviews: load more (5 rows at a time) ===== */
+.rv-card.rv-off { display: none !important; }
+.rv-load { display: flex; justify-content: center; margin-top: 26px; }
+.rv-load[hidden] { display: none; }
+.rv-load .btn { gap: 8px; }
+.rv-load-n { color: var(--muted); font-weight: 500; font-size: .9em; }
+.rv-card.rv-pop { animation: rvPop .5s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes rvPop { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* ===== Reviews hero: 100% + stars on a soft arc ===== */
+.rv-hero-badge { display: inline-grid; justify-items: center; gap: 2px; margin-top: 22px; padding: 14px 26px 10px; border-radius: 22px;
+  background: linear-gradient(180deg, rgba(59,163,227,.10), rgba(59,163,227,.02)); border: 1px solid rgba(59,163,227,.22); }
+.rv-hero-pct { margin: 0; display: flex; align-items: center; gap: 12px; line-height: 1; }
+.rv-hero-pct strong { font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 700; color: var(--brand-2); direction: ltr; letter-spacing: -.01em; }
+:root[data-theme="light"] .rv-hero-pct strong { color: var(--brand); }
+.rv-hero-pct span { font-size: 1.35rem; font-weight: 700; color: var(--text); }
+.rv-arc { --n: 5; display: flex; justify-content: center; gap: 6px; height: 44px; padding-top: 6px; }
+.rv-arc i { --c: calc(var(--i) - (var(--n) - 1) / 2);            /* -1.5 … 1.5 : distance from the middle */
+  display: block; width: 26px; height: 26px; color: #f5b301;
+  transform: translateY(calc(var(--c) * var(--c) * 4px)) rotate(calc(var(--c) * 9deg));
+  animation: rvStarIn .6s cubic-bezier(.2,.9,.3,1.3) both, rvStarPulse 2.4s ease-in-out infinite;
+  animation-delay: calc(.35s + var(--i) * .12s), calc(1.2s + var(--i) * .3s); }
+.rv-arc svg { width: 100%; height: 100%; fill: currentColor; filter: drop-shadow(0 2px 6px rgba(245,179,1,.35)); }
+@keyframes rvStarIn { from { opacity: 0; transform: translateY(14px) scale(.4) rotate(calc(var(--c) * 9deg)); }
+  to { opacity: 1; transform: translateY(calc(var(--c) * var(--c) * 4px)) rotate(calc(var(--c) * 9deg)); } }
+@keyframes rvStarPulse { 0%, 100% { scale: 1; filter: none; } 50% { scale: 1.14; filter: brightness(1.12) drop-shadow(0 0 6px rgba(245,179,1,.55)); } }
+@media (prefers-reduced-motion: reduce) { .rv-card.rv-pop { animation: none; } }
+/* hero badge v2: centered, wide pill, stars in one straight line next to the text */
+.rv-hero-badge { display: flex; align-items: center; justify-content: center; gap: 22px; width: fit-content; min-width: min(460px, 100%);
+  margin: 26px auto 0; padding: 16px 34px; border-radius: 20px; }
+.rv-hero-badge::before { content: ""; order: 1; width: 1px; align-self: stretch; background: rgba(59,163,227,.28); }
+.rv-hero-pct { order: 0; }
+.rv-arc { order: 2; height: auto; padding: 0; gap: 8px; align-items: center; }
+.rv-arc i { transform: none; width: 28px; height: 28px; }
+@keyframes rvStarIn { from { opacity: 0; transform: translateY(10px) scale(.4); } to { opacity: 1; transform: none; } }
+@media (max-width: 480px) { .rv-hero-badge { gap: 14px; padding: 14px 18px; min-width: 0; width: 100%; } .rv-arc { gap: 5px; } .rv-arc i { width: 22px; height: 22px; } .rv-hero-pct strong { font-size: 2.2rem; } .rv-hero-pct span { font-size: 1.15rem; } }
+/* star pulse stays on everywhere (desktop + mobile, even with reduced-motion on) — it is small and slow */
+.rv-arc i, .rv-arc i:nth-child(n) { animation: rvStarPulse 2.4s ease-in-out infinite !important; animation-delay: calc(var(--i) * .3s) !important; }
+@media (prefers-reduced-motion: reduce) { .rv-arc i { animation-duration: 2.4s !important; animation-iteration-count: infinite !important; } }
+/* stars v3: a bit bigger + livelier wave (pop, tiny twist, golden glow) */
+.rv-arc { gap: 10px; }
+.rv-arc i { width: 32px; height: 32px; }
+.rv-arc i, .rv-arc i:nth-child(n) { animation: rvStarWave 2.2s cubic-bezier(.4,0,.2,1) infinite !important; animation-delay: calc(var(--i) * .16s) !important; }
+@keyframes rvStarWave {
+  0%, 60%, 100% { scale: 1; rotate: 0deg; filter: drop-shadow(0 2px 5px rgba(245,179,1,.3)); }
+  18% { scale: 1.28; rotate: -10deg; filter: brightness(1.15) drop-shadow(0 0 10px rgba(255,196,0,.75)); }
+  32% { scale: .94; rotate: 6deg; }
+  44% { scale: 1.06; rotate: 0deg; }
+}
+@media (max-width: 480px) { .rv-arc { gap: 6px; } .rv-arc i { width: 26px; height: 26px; } }
+@media (prefers-reduced-motion: reduce) { .rv-arc i { animation-duration: 2.2s !important; animation-iteration-count: infinite !important; } }
+/* every 5 seconds: header logo glow + stars wave (same pace, ~1.3s of motion then rest) */
+.site-header .brand { animation: logoHalo5 5s ease-in-out .4s infinite; }
+.site-header .brand::after { animation: logoSweep5 5s ease-in-out .4s infinite; }
+.site-header .brand:hover::after { animation: logoShine 1s ease forwards; }
+@keyframes logoSweep5 { 0% { background-position: 160% 0; } 26% { background-position: -60% 0; } 100% { background-position: -60% 0; } }
+@keyframes logoHalo5 { 0%, 28%, 100% { filter: drop-shadow(0 0 0 rgba(108,193,240,0)); } 13% { filter: drop-shadow(0 0 7px rgba(108,193,240,.55)); } }
+.rv-arc i, .rv-arc i:nth-child(n) { animation: rvStarWave5 5s cubic-bezier(.4,0,.2,1) infinite !important; animation-delay: calc(var(--i) * .16s) !important; }
+@keyframes rvStarWave5 {
+  0%, 27%, 100% { scale: 1; rotate: 0deg; filter: drop-shadow(0 2px 5px rgba(245,179,1,.3)); }
+  8% { scale: 1.28; rotate: -10deg; filter: brightness(1.15) drop-shadow(0 0 10px rgba(255,196,0,.75)); }
+  14.5% { scale: .94; rotate: 6deg; }
+  20% { scale: 1.06; rotate: 0deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header .brand, .site-header .brand::after, .rv-arc i { animation-duration: 5s !important; animation-iteration-count: infinite !important; }
+}

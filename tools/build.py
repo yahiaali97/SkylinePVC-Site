@@ -74,11 +74,12 @@ def head(title, desc):
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="{SITE}assets/og-image.jpg">
-<link rel="icon" href="assets/favicon-window.svg" type="image/svg+xml">
-<link rel="icon" href="assets/favicon-win32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="assets/favicon-win48.png" sizes="48x48" type="image/png">
-<link rel="icon" href="assets/favicon-win512.png" sizes="512x512" type="image/png">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="icon" href="assets/favicon-skyline.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-skyline-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/favicon-skyline-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="assets/favicon-skyline-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="assets/favicon-skyline-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon-skyline.png">
 <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css?v={ASSET_V}">
 <script>try{{var t=localStorage.getItem("skyline-theme");if(t)document.documentElement.setAttribute("data-theme",t)}}catch(e){{}}</script>
@@ -255,7 +256,7 @@ def page_index():
     steps = "".join(f'<li class="jcard"><span class="jnum">0{i+1}</span><h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(STEPS))
     trust = "".join(f'<figure class="trust-card"><blockquote>{d}</blockquote><figcaption>{n}</figcaption></figure>' for n, d in TRUST)
     faq_short = "".join(f'<details><summary>{q}</summary><div class="answer">{a}</div></details>' for q, a in FAQ)
-    return head("شبابيك وأبواب uPVC وشيش حصيرة | Skyline سكاي لاين", "Skyline سكاي لاين: توريد وتركيب شبابيك وأبواب uPVC، شبابيك جرار وبانوراما، تقفيل بلكونات وشيش حصيرة في جميع محافظات مصر. ضمان 10 سنين على القطاع — المعرض في مدينة نصر.") + header("index.html") + f'''
+    return head("Skyline For UPVC & Shutter — Window & Door System Manufacturer in Egypt", "Skyline سكاي لاين: توريد وتركيب شبابيك وأبواب uPVC، شبابيك جرار وبانوراما، تقفيل بلكونات وشيش حصيرة في جميع محافظات مصر. ضمان 10 سنين على القطاع — المعرض في مدينة نصر.") + header("index.html") + f'''
 <section class="hero">
   <canvas id="hero3d" aria-hidden="true"></canvas>
   <div class="container hero-grid">
